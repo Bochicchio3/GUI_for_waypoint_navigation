@@ -12,7 +12,7 @@ function varargout = WaypointPUB(varargin)
 %      WAYPOINTPUB('Property','Value',...) creates a new WAYPOINTPUB or raises the
 %      existing singleton*.  Starting from the left, property value pairs are
 %      applied to the GUI before WaypointPUB_OpeningFcn gets called.  An
-%      unrecognized property name or invalid value makes property application
+%     unrecognized property name or invalid value makes property application
 %      stop.  All inputs are passed to WaypointPUB_OpeningFcn via varargin.
 %
 %      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
@@ -22,7 +22,7 @@ function varargout = WaypointPUB(varargin)
 
 % Edit the above text to modify the response to help WaypointPUB
 
-% Last Modified by GUIDE v2.5 08-Jul-2019 01:19:23
+% Last Modified by GUIDE v2.5 19-Jul-2019 16:10:40
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -123,12 +123,18 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on button press in pushbutton2.
-function pushbutton2_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton2 (see GCBO)
+% --- Executes on button press in startbutton.
+function startbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to startbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+robot3 = rospublisher('/turtle1/start_and_stop');
+a = rosmessage('std_msgs/Float64')
+a.Data=1;
+tic;
+while toc < 1
+    send(robot3,a)
+end
 
 % --- Executes on button press in stop.
 function stop_Callback(hObject, eventdata, handles)
@@ -140,6 +146,18 @@ function stop_Callback(hObject, eventdata, handles)
 % else
 %     flag=True
 % end
+
+robot2 = rospublisher('/turtle1/start_and_stop');
+velmsg2 = rosmessage(robot2);
+a = rosmessage('std_msgs/Float64')
+a.Data=0;
+
+tic;
+while toc < 1
+    send(robot2,a)
+end
+
+
 
 
 
@@ -206,11 +224,11 @@ function setwaypoint_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 x=str2num(get(handles.xwaypoint,'String'));
 y=str2num(get(handles.ywaypoint,'String'));
-robot = rospublisher('/turtle1/cmd_vel');
+robot = rospublisher('/turtle1/waypoint_publisher');
 velmsg = rosmessage(robot);
 
-velmsg.Linear.X=x
-velmsg.Linear.Y=y
+velmsg.X=x
+velmsg.Y=y
 Flag=get(handles.repeat,'Value')
 tic;
 while toc < 5
