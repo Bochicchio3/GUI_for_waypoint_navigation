@@ -35,11 +35,11 @@ In the specific case of the rover, we connect to ROSNET on the Intel Joule and l
 In general, if you setup a network on a PC, and you want to connect to that network follow this procedure:
 Make sure that you are connected to the same local network and that you can succesfully ping the Computer
 
-1)Open a terminal
-2)'print env | grep URI
-3)You should see something like: ROS_MASTER_URI=http://192.1.1.1:11311
-4)Copy the IP (http://ip:localport) in the ROS INIT box
-5)Press the ROS INIT button
+1)Open a terminal 
+2)$print env | grep URI
+3)You should see something like: ROS_MASTER_URI=http://192.1.1.1:11311 
+4)Copy the IP (http://ip:localport) in the ROS INIT box 
+5)Press the ROS INIT button 
 
 Be aware, that if you already initialized or subscribed to a ros network you will se an error on the matlab interface. In that case, just make sure
 that you press on SHUTDOWN and then try ROS_INIT again.
