@@ -33,13 +33,15 @@ First of all, you must initialize or subscribe to a Ros Network.
 In the specific case of the rover, we connect to ROSNET on the Intel Joule and launch the roscore there.
 In general, if you setup a network on a PC, and you want to connect to that network follow this procedure:
 Make sure that you are connected to the same local network and that you can succesfully ping the computer.
+
+Open a terminal 
 ```
->. Open a terminal 
->. $print env | grep URI
->. You should see something like: ROS_MASTER_URI=http://192.1.1.1:11311 
->. Copy the IP (http://ip:localport) in the ROS INIT box 
->. Press the ROS INIT button 
+ $print env | grep URI
 ```
+You should see something like: ROS_MASTER_URI=http://192.1.1.1:11311 
+Copy the IP (http://ip:localport) in the ROS INIT box 
+Press the ROS INIT button 
+
 Be aware, that if you already initialized or subscribed to a ros network you will se an error on the matlab interface. In that case, just make sure that you press on SHUTDOWN and then try ROS_INIT again.
 
 ### 3.2) Publish a Waypoint
@@ -146,6 +148,9 @@ Example:
 send(robot,waypoint)
 ```
 
+# Common pitfalls
 
+1. Ros network is already initialized. Make sure to shut down any existing network before initializing a new one.
+2. You are publishing in the wrong topics. Always check in the callback functions that topics are consistent.
 
 
